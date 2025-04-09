@@ -18,20 +18,20 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.List;
 
-public class TestEntity extends CreeperEntity implements PolymerEntity {
+public class TestEntity extends ZombieEntity implements PolymerEntity {
     public TestEntity(EntityType<TestEntity> entityEntityType, World world) {
         super(entityEntityType, world);
     }
 
     @Override
     public EntityType<?> getPolymerEntityType(PacketContext context) {
-        return EntityType.VILLAGER;
+        return EntityType.IRONGOLEM;
     }
 
     @Override
-    public void modifyRawTrackedData(List<DataTracker.SerializedEntry<?>> data, ServerPlayerEntity player, boolean initial) {
-        if (initial) {
-            //data.add(new DataTracker.SerializedEntry(VillagerEntityAccessor.get().id(), VillagerEntityAccessor.get().dataType(), new VillagerData(VillagerType.SWAMP, VillagerProfession.CARTOGRAPHER, 1)));
+    public boolean doHurtTarget(ServerLevel serverLevel, Entity entity) {
+        serverLevel.broadcastEntityEvent(this, (byte) 4);
+        return super.doHurtTarget(serverLevel, entity);
         }
     }
 
